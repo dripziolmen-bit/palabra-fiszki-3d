@@ -1,4 +1,4 @@
-import { desk3D } from "./scene3d.js";
+import { desk3D } from "./scene3d.js?v=3";
 "use strict";
 const STORE_KEY = "palabra-fiszki-v1";
 const $ = id => document.getElementById(id);

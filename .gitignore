@@ -1,0 +1,6 @@
+words.tsv
+qa.cjs
+qa-*.png
+qa-*.json
+*.log
+.DS_Store

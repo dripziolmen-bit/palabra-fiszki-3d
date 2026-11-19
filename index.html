@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102c27">
+  <meta name="description" content="Tysiąc hiszpańskich słów na fizycznych fiszkach. Obracaj, przesuwaj i zapamiętuj.">
+  <title>Palabra — fiszki, które czujesz</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,500,20,0;9..144,600,20,0;9..144,700,20,0&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a href="./" class="brand" aria-label="Palabra — początek">
+        <span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-word">palabra<span class="brand-dot">.</span></span>
+      </a>
+      <span class="brand-divider"></span>
+      <span class="topbar-subtitle">Twój mały rytuał nauki</span>
+      <div class="topbar-actions">
+        <button id="directionBtn" class="topbutton direction" type="button" title="Zmień kierunek nauki"><span id="directionText">ES <span class="arrow-swap">⇄</span> EN</span></button>
+        <button id="shuffleBtn" class="topbutton" type="button" aria-pressed="false" title="Wymieszaj pozostałe słowa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h2.5c4 0 7 10 11 10H20m0 0-3-3m3 3-3 3M4 17h2.5c1.7 0 2.9-1.6 4.1-3.4M14 10.4C15.2 8.4 16.3 7 17.5 7H20m0 0-3-3m3 3-3 3" /></svg><span class="button-name">Mieszaj</span></button>
+        <button id="resetBtn" class="topbutton icononly" type="button" title="Rozpocznij od nowa" aria-label="Rozpocznij od nowa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2.9 6.6M3 4v7h7"/></svg></button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="intro">
+        <div class="intro-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> HISZPAŃSKI, KTÓRY ZOSTAJE W GŁOWIE</div>
+          <h1>Ucz się <em>z wyczuciem.</em></h1>
+          <p>Odwróć fiszkę jednym dotknięciem. Potem odłóż ją tam, gdzie pasuje.</p>
+        </div>
+        <div class="progress-summary" aria-live="polite">
+          <div class="progress-numbers"><span id="completedCount">0</span><span class="slash">/</span><span id="totalCount">1000</span></div>
+          <div class="progress-caption">przejrzanych słów</div>
+          <div class="progress-rail"><span class="progress-rail-fill" id="progressFill"></span></div>
+        </div>
+      </div>
+
+      <section class="desk" id="desk" aria-label="Wirtualny stół z fiszkami">
+        <div class="desk-sheen" aria-hidden="true"></div>
+        <div class="desk-corner desk-corner-left"><span class="tiny-star">✳</span> TWOJA PRZESTRZEŃ NAUKI</div>
+        <div class="desk-corner desk-corner-right">EDYCJA 01 / 1000 SŁÓW <span class="tiny-star">✳</span></div>
+        <div class="board" id="board">
+          <button class="pile pile-again" id="againPile" type="button" data-choice="again" aria-label="Odłóż fiszkę na kupkę do powtórki">
+            <span class="pile-image" aria-hidden="true">
+              <span class="pile-sheet sheet-3"></span><span class="pile-sheet sheet-2"></span>
+              <span class="pile-sheet sheet-1"><span class="pile-glyph">↶</span></span>
+            </span>
+            <span class="pile-head">Jeszcze ćwiczę</span>
+            <span class="pile-caption">Tu wrócimy później</span>
+            <span class="pile-count" id="againCount">0 fiszek</span>
+            <span class="pile-direction"><span class="desktop-key">←</span> LEWA STRONA</span>
+          </button>
+
+          <div class="card-area">
+            <div class="card-aura" aria-hidden="true"></div>
+            <div class="card-underlay underlay-3" aria-hidden="true"></div>
+            <div class="card-underlay underlay-2" aria-hidden="true"></div>
+            <div class="card-underlay underlay-1" aria-hidden="true"></div>
+            <div id="card" class="flashcard" role="button" tabindex="0" aria-label="Odwróć fiszkę" aria-live="off">
+              <div class="card-rotator" id="cardRotator">
+                <div class="card-face face-front">
+                  <div class="card-edge-top"></div>
+                  <div class="card-heading"><span class="language-tag" id="frontLanguage">ESPAÑOL</span><span class="card-serial" id="frontSerial">Nº 0001</span></div>
+                  <div class="card-center">
+                    <div class="word-kicker">SŁOWO <span class="word-kicker-line"></span></div>
+                    <div class="word-text" id="frontWord">como</div>
+                    <div class="word-decoration" aria-hidden="true">✳</div>
+                  </div>
+                  <div class="card-foot"><span>DOTKNIJ, BY ODKRYĆ ZNACZENIE</span><span class="flip-mark">↻</span></div>
+                </div>
+                <div class="card-face face-back">
+                  <div class="card-edge-top"></div>
+                  <div class="card-heading"><span class="language-tag" id="backLanguage">ENGLISH</span><span class="card-serial" id="backSerial">Nº 0001</span></div>
+                  <div class="card-center">
+                    <div class="word-kicker">ZNACZENIE <span class="word-kicker-line"></span></div>
+                    <div class="word-text" id="backWord">as</div>
+                    <div class="word-decoration" aria-hidden="true">✳</div>
+                  </div>
+                  <div class="card-foot"><span>PRZESUŃ NA WYBRANĄ KUPKĘ</span><span class="flip-mark">↻</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="hand" id="hand" aria-hidden="true">
+              <svg viewBox="0 0 330 305" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="skin" x1=".05" y1=".1" x2=".92" y2=".92" objectBoundingBox="true"><stop stop-color="#ffd5b2"/><stop offset=".35" stop-color="#e8ae84"/><stop offset=".7" stop-color="#c37d5f"/><stop offset="1" stop-color="#965b49"/></linearGradient>
+                  <linearGradient id="finger" x1=".1" y1="0" x2=".85" y2="1"><stop stop-color="#ffdfbd"/><stop offset=".5" stop-color="#df9b78"/><stop offset="1" stop-color="#ae6c53"/></linearGradient>
+                  <linearGradient id="sleeve" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#304c40"/><stop offset="1" stop-color="#142e29"/></linearGradient>
+                  <filter id="handshadow" x="-25%" y="-30%" width="150%" height="170%"><feGaussianBlur in="SourceAlpha" stdDeviation="8"/><feOffset dy="13" dx="3"/><feComponentTransfer><feFuncA type="linear" slope=".37"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <g filter="url(#handshadow)">
+                  <path d="M225 260C206 246 188 224 170 208C154 194 150 179 142 157L115 111C109 98 112 89 120 85C131 80 139 89 146 100L171 135L137 76C131 63 136 52 146 49C157 46 164 53 171 67L197 115L178 63C174 50 180 40 191 39C202 38 208 46 213 60L234 111L227 76C224 64 230 55 241 54C252 54 257 63 259 74L275 154C280 166 280 182 282 195L310 228Z" fill="url(#skin)" stroke="#9d5f4d" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M138 176C127 165 111 156 100 162C89 168 91 178 99 185L149 224C165 239 182 248 212 254L239 258" fill="url(#finger)" stroke="#9d5f4d" stroke-width="2"/>
+                  <path d="M154 171C172 172 189 189 195 208M176 141C189 153 201 162 205 180M202 123C216 142 227 153 231 170M239 117C249 131 252 145 254 155" stroke="#9d5e4c" stroke-opacity=".45" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  <path d="M116 96C120 90 128 90 132 95M141 65C146 59 154 60 160 67M187 55C193 49 201 52 205 58M237 69C242 64 249 66 252 71" stroke="#ffe4c7" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>
+                  <path d="M204 251L287 202L328 256L264 306L219 306Z" fill="url(#sleeve)" stroke="#11241f" stroke-width="3"/>
+                  <path d="M207 249L287 202" stroke="#86a392" stroke-width="5" opacity=".7"/>
+                  <path d="M231 275C244 265 255 260 267 255" stroke="#426457" stroke-width="2" opacity=".55"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card-caption" id="cardCaption"><span class="little-diamond">◆</span> TWOJA FISZKA <span class="center-dot">·</span> <span id="cardPosition">1 Z 1000</span></div>
+          </div>
+
+          <button class="pile pile-known" id="knownPile" type="button" data-choice="known" aria-label="Odłóż fiszkę na kupkę znam">
+            <span class="pile-image" aria-hidden="true">
+              <span class="pile-sheet sheet-3"></span><span class="pile-sheet sheet-2"></span>
+              <span class="pile-sheet sheet-1"><span class="pile-glyph">✓</span></span>
+            </span>
+            <span class="pile-head">Już umiem</span>
+            <span class="pile-caption">To zostaje w głowie</span>
+            <span class="pile-count" id="knownCount">0 fiszek</span>
+            <span class="pile-direction"><span class="desktop-key">→</span> PRAWA STRONA</span>
+          </button>
+        </div>
+
+        <div class="desk-bottom">
+          <span class="instruction"><span class="instruction-icon">↻</span> KLIKNIJ, ABY OBRÓCIĆ</span>
+          <span class="instruction"><span class="instruction-icon">⇄</span> PRZECIĄGNIJ NA KUPKĘ</span>
+          <span class="instruction instruction-last"><kbd>U</kbd> COFNIJ</span>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Sterowanie fiszkami">
+        <button class="control-button control-again" id="againBtn" type="button"><span class="control-symbol">↶</span><span>Do powtórki</span><kbd>←</kbd></button>
+        <button class="control-button control-flip" id="flipBtn" type="button"><span class="control-symbol">⤾</span><span>Odwróć fiszkę</span><kbd>SPACJA</kbd></button>
+        <button class="control-button control-known" id="knownBtn" type="button"><span class="control-symbol">✓</span><span>Już umiem</span><kbd>→</kbd></button>
+      </section>
+
+      <div class="below-controls">
+        <p><span class="warm-dot"></span> Postępy zapisują się automatycznie w tej przeglądarce.</p>
+        <button id="undoBtn" type="button" class="undo-button" disabled><span>↶</span> Cofnij ostatnią <kbd>U</kbd></button>
+      </div>
+    </main>
+    <footer class="site-footer"><span>PALABRA STUDY DESK</span><span>MAŁE KROKI. WIELKIE SŁOWA.</span><span>ES / EN · 1000</span></footer>
+  </div>
+
+  <div id="finishOverlay" class="finish-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="finishTitle">
+    <div class="finish-card">
+      <div class="finish-star">✳</div>
+      <span class="finish-overline">SESJA UKOŃCZONA</span>
+      <h2 id="finishTitle">Piękna robota.</h2>
+      <p>Każde słowo jest teraz o krok bliżej. Możesz wrócić do tych trudniejszych albo zacząć od nowa.</p>
+      <div class="finish-statrow"><span><strong id="finishKnown">0</strong> już umiem</span><span><strong id="finishAgain">0</strong> do powtórki</span></div>
+      <button class="finish-primary" id="reviewAgainBtn">Powtórz trudniejsze <span>↗</span></button>
+      <button class="finish-secondary" id="finishRestartBtn">Rozpocznij całość od nowa</button>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

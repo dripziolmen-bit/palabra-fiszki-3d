@@ -11,3 +11,17 @@
   .pile-image {height:65px;transform:scale(.37);margin-bottom:2px}
   .hand {bottom:78px;right:-8px}
 }
+/* Genuine Three.js presentation: HTML remains the accessible interaction layer only. */
+.desk{background-image:radial-gradient(ellipse at 50% 30%,#295c49,#132f27);}
+.webgl-desk{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;pointer-events:none}
+.desk.is-real-3d .board{position:relative;z-index:3}
+.desk.is-real-3d .card-rotator,.desk.is-real-3d .card-underlay,.desk.is-real-3d .hand,.desk.is-real-3d .pile-image,.desk.is-real-3d .card-aura{visibility:hidden!important}
+.desk.is-real-3d .flashcard{filter:none!important;background:transparent!important}
+.desk.is-real-3d .pile{background:transparent;border-color:#cad4b33f;transition:background .2s,border-color .2s}
+.desk.is-real-3d .pile:hover,.desk.is-real-3d .pile.drop-target{background:#f6edd519;border-color:#f6e3ab;transform:none}
+.desk.is-real-3d .desk-corner,.desk.is-real-3d .desk-bottom,.desk.is-real-3d .card-caption{z-index:4;position:relative}
+.desk.is-real-3d .desk-corner{position:absolute}
+.desk.is-real-3d .pile-head{color:#f4efdd;text-shadow:0 2px 4px #123127}
+
+/* Keep the caption out of the flex row so the interactive plane stays centered. */
+.desk.is-real-3d .card-caption{position:absolute;bottom:-11px;left:50%;transform:translateX(-50%)}

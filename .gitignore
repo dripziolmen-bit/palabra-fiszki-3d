@@ -4,3 +4,12 @@ qa-*.png
 qa-*.json
 *.log
 .DS_Store
+qa-public.cjs
+qa-3d.cjs
+debug.cjs
+layout.cjs
+shot3d.cjs
+flipshot.cjs
+render-*.png
+verify-*.png
+debug3d-*.png
